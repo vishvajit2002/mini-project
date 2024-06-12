@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product 1</title>
+</head>
+<body>
+    <h1>Product 1</h1>
+    <p>$10.00</p>
+    <button class="add-to-cart" data-id="1" data-name="Product 1" data-price="10.00">Add to Cart</button>
+
+    <a href="cart.html">View Cart</a>
+
+    <script>
+        document.querySelector('.add-to-cart').addEventListener('click', function() {
+            addToCart(this.getAttribute('data-id'), this.getAttribute('data-name'), parseFloat(this.getAttribute('data-price')));
+        });
+
+        function addToCart(id, name, price) {
+            var cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+            var newItem = { id: id, name: name, price: price };
+            cartItems.push(newItem);
+            localStorage.setItem('cart', JSON.stringify(cartItems));
+            alert('Product added to cart.');
+        }
+    </script>
+</body>
+</html>
+
+
+
+<!-- 
+
+     <div class="product-heading">
+            <h2>Product Name</h2>
+            <h2>Price</h2>
+        </div>
+
+ -->

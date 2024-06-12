@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root"; // Your MySQL username
 $password = ""; // Your MySQL password
-$database = "project"; // Your MySQL database name
+$database = "vishva"; // Your MySQL database name
 
 $conn = new mysqli($servername, $username, $password, $database);
 
@@ -17,10 +17,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $rpassword = $_POST['rpassword'];
+
 
     // Inserting data into the database
-    $sql = "INSERT INTO register (username, email, password, rpassword) VALUES ('$username', '$email', '$password','$rpassword')";
+    $sql = "INSERT INTO login (username, email, password) VALUES ('$username', '$email', '$password')";
 
     
     if ($conn->query($sql) === TRUE) {
