@@ -1,0 +1,308 @@
+/* Reset some default styles */
+body, h1, h2, h3, p {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+    background-color: #f1f1f1;
+    color: #333;
+}
+
+/* Navigation Bar */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #333;
+    padding: 30px;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.5s ease;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+}
+
+.navbar ul li {
+    margin: 0 20px;
+    opacity: 0;
+    animation: slideIn 0.5s ease-out forwards;
+}
+
+.navbar ul li:nth-child(1) { animation-delay: 0.2s; }
+.navbar ul li:nth-child(2) { animation-delay: 0.4s; }
+.navbar ul li:nth-child(3) { animation-delay: 0.6s; }
+.navbar ul li:nth-child(4) { animation-delay: 0.8s; }
+
+.navbar ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    position: relative;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.navbar ul li a:hover {
+    color: #ff7e5f;
+    transform: scale(1.1);
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Header Section */
+.header {
+    background: url('./Images/erik-mclean-ZRns2R5azu0-unsplash.jpg') no-repeat center center/cover;
+    color: #fff;
+    text-align: center;
+    padding: 200px 20px;
+    box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.7);
+    animation: fadeInBackground 2s ease-in-out;
+}
+
+.header h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    animation: slideDown 1s ease forwards;
+}
+
+.header p {
+    font-size: 1.5rem;
+    animation: fadeIn 2s ease;
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeInBackground {
+    from { background-position: center top; }
+    to { background-position: center center; }
+}
+
+/* Text Area Section */
+.text-area {
+    background:#545252;
+    color: #fff;
+    padding: 50px;
+    text-align: center;
+    font-size: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: fadeInText 2s ease-in-out;
+    border-radius: 10px;
+    margin: 20px;
+    transition: transform 0.5s ease;
+}
+
+.text-area:hover {
+    transform: translateY(-10px);
+}
+
+@keyframes fadeInText {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Home Section */
+.home {
+    text-align: center;
+    padding: 50px 20px;
+    background:#f7f6f6;
+    color: #1a1919;
+    animation: fadeIn 2s ease-in-out;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.video-container {
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+    background: #000;
+    animation: slideUp 2s ease-in-out;
+    margin-top: 30px;
+}
+
+.video-container video {
+    display: block;
+    width: 100%;
+    height: auto;
+    transform: scale(1.05);
+    transition: transform 1s ease-in-out, filter 1s ease-in-out;
+    filter: brightness(0.8);
+}
+
+.video-container video:hover {
+    transform: scale(1.1);
+    filter: brightness(1);
+}
+
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Gallery Section */
+.gallery {
+    padding: 50px;  /* Uniform padding around the gallery section */
+    background: #aaa8a8;
+    color: #080808;
+    text-align: center;
+    margin: 20px;
+    border-radius: 10px;
+}
+
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin: 0 auto;
+    max-width: 1200px;  /* Set max width to center the container */
+    padding: 0 20px;  /* Add padding to the left and right */
+    margin: 20px;
+
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease-in-out;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.5s ease-in-out;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.2); /* Zoom effect on hover */
+}
+
+.gallery-item:hover {
+    transform: translateY(-10px); /* Lift effect on hover */
+}
+
+.gallery-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.gallery-item:hover::before {
+    opacity: 1;
+}
+
+.gallery-item:hover .gallery-info {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.gallery-info {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    color: #fff;
+    text-align: left;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.gallery-info h3 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.gallery-info p {
+    margin: 5px 0 0;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* About Section */
+.about, .services, .contact {
+    padding: 50px 20px;
+    text-align: center;
+    margin: 20px;
+    border-radius: 10px;
+    background:#545252;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 2s ease-in-out;
+    color: #fff;
+
+}
+
+/* Services Section */
+.services .service {
+    margin: 20px 0;
+    background:#f2f1f1;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s, background-color 0.5s;
+    color: #000;
+}
+
+.services .service:hover {
+    transform: translateY(-10px);
+    background-color: #ff7e5f;
+}
+
+/* Contact Section */
+.contact-number {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #f8f8f8;
+    color: #111111;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.contact-number:hover {
+    background-color: #ff7e5f;
+    transform: scale(1.1);
+}
+
+/* Footer */
+.footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+    animation: fadeIn 2s ease-in-out;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Keyframes for fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
