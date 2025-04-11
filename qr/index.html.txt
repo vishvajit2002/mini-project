@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR & Barcode Generator</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; }
+    #history img { width: 150px; margin: 5px; border: 1px solid #ccc; border-radius: 8px; }
+    .output { margin: 20px; }
+  </style>
+</head>
+<body>
+  <h1>QR & Barcode Generator</h1>
+  <input type="text" id="text" placeholder="Enter text" />
+  <button onclick="generateCodes()">Generate</button>
+
+  <div class="output">
+    <canvas id="qrcode"></canvas>
+    <svg id="barcode"></svg>
+  </div>
+
+  <h2>History (From ImgBB)</h2>
+  <div id="history"></div>
+
+  <script>
+    const imgbbAPI = "b7886d53e17764f2595baa60b2732363";
+
+    async function uploadBase64(base64Data, type) {
+      const formData = new FormData();
+      formData.append("image", base64Data);
+      formData.append("name", type + "_" + Date.now());
+
+      const res = await fetch("https://api.imgbb.com/1/upload?key=" + imgbbAPI, {
+        method: "POST",
+        body: formData,
+      });
+
+      const json = await res.json();
+      if (json.success) {
+        saveToLocal(type, json.data.display_url);
+        showHistory();
+      } else {
+        console.error("Upload failed", json);
+      }
+    }
+
+    function saveToLocal(type, url) {
+      const data = JSON.parse(localStorage.getItem("history") || "[]");
+      data.push({ type, url });
+      localStorage.setItem("history", JSON.stringify(data));
+    }
+
+    function showHistory() {
+      const data = JSON.parse(localStorage.getItem("history") || "[]");
+      const div = document.getElementById("history");
+      div.innerHTML = "";
+      data.reverse().forEach(entry => {
+        const img = document.createElement("img");
+        img.src = entry.url;
+        img.alt = entry.type;
+        div.appendChild(img);
+      });
+    }
+
+    function generateCodes() {
+      const text = document.getElementById("text").value;
+      if (!text.trim()) return alert("Enter some text!");
+
+      // Generate QR Code
+      QRCode.toCanvas(document.getElementById("qrcode"), text, error => {
+        if (!error) {
+          const canvas = document.getElementById("qrcode");
+          const base64Image = canvas.toDataURL("image/png").split(',')[1];
+          uploadBase64(base64Image, 'QR');
+        }
+      });
+
+      // Generate Barcode
+      JsBarcode("#barcode", text, { format: "CODE128" });
+
+      setTimeout(() => {
+        const svg = document.getElementById("barcode");
+        const svgData = new XMLSerializer().serializeToString(svg);
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        const img = new Image();
+
+        img.onload = function () {
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+          const base64Image = canvas.toDataURL("image/png").split(',')[1];
+          uploadBase64(base64Image, 'Barcode');
+        };
+
+        const svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+        const url = URL.createObjectURL(svgBlob);
+        img.src = url;
+      }, 500);
+    }
+
+    showHistory();
+  </script>
+</body>
+</html>
+
+
